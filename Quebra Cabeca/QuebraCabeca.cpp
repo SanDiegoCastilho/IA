@@ -9,7 +9,22 @@ int** InstanciaMatriz(int** Matriz, int Dimensao);
 //Função responsável por inicializar com os respectivos valores de cada posição da matriz.
 int** InicializaMatrixObjetivo(int** Matriz, int Dimensao);
 
+//Inicializa vetor de distâncias
+int* InicializaVetorDistancias(int* Vetor, int Dimensao, int** MatrizInicial, int** MatrizObjetivo)
+
 void MostraMatriz(int** Matriz, int Dimensao);
+
+//Funções de movimentações de peças
+void MoverBaixo(int i, int j, int** Matriz, int Dimensao);
+
+void MoverCima(int i, int j, int** Matriz, int Dimensao);
+
+void MoverEsquerda(int i, int j, int** Matriz, int Dimensao);
+
+void MoverDireita(int i, int j, int** Matriz, int Dimensao);
+
+//Verifica se o estado objetivo foi alcançado.
+bool VerificarObjetivo(int** Matriz, int** MatrizObjetivo, int Dimensao);
 
 int main(){
 	int Dimensao;
@@ -31,10 +46,15 @@ int main(){
 		for (int j = 0; j < Dimensao; j++){
 			cout << "posição (" << i << ", " << j << "): ";
 			cin >> MatrizInicial[i][j];
-			cout << endl;
 		}
 	}
 
+	MostraMatriz(MatrizInicial, Dimensao);
+	MoverBaixo(1,1,MatrizInicial, Dimensao);
+	cout << endl;
+	MostraMatriz(MatrizInicial, Dimensao);
+	MoverCima(2,1,MatrizInicial, Dimensao);
+	cout << endl;
 	MostraMatriz(MatrizInicial, Dimensao);
 
 	return 0;
@@ -77,4 +97,55 @@ void MostraMatriz(int** Matriz, int Dimensao){
 
 		cout << endl;
 	}
+}
+
+int* InicializaVetorDistancias(int* Vetor, int Dimensao, int** MatrizInicial, int** MatrizObjetivo){
+	Vetor = new int[Dimensao];
+	
+	for (int i = 0; i < ; ++i){
+		/* code */
+	}
+}
+
+// ------------- Funções de movimentação de peças ------------------
+void MoverBaixo(int i, int j, int** Matriz, int Dimensao){
+	if (Matriz[i][j] == 0 && i < Dimensao - 1){
+		Matriz[i][j] = Matriz[i+1][j];
+		Matriz[i+1][j] = 0; 
+	}
+}
+
+void MoverCima(int i, int j, int** Matriz, int Dimensao){
+	if (Matriz[i][j] == 0 && i > 0){
+		Matriz[i][j] = Matriz[i-1][j];
+		Matriz[i-1][j] = 0;
+	}
+}
+
+void MoverEsquerda(int i, int j, int** Matriz, int Dimensao){
+	if (Matriz[i][j] == 0 && j > 0){
+		Matriz[i][j] = Matriz[i][j-1];
+		Matriz[i][j-1] = 0;	
+	}
+}
+
+void MoverDireita(int i, int j, int** Matriz, int Dimensao){
+	if (Matriz[i][j] == 0 && j < Dimensao - 1){
+		Matriz[i][j] = Matriz[i][j+1];
+		Matriz[i][j+1] = 0;	
+	}
+}
+
+bool VerificarObjetivo(int** Matriz, int** MatrizObjetivo, int Dimensao){
+	bool aux = true;
+
+	for (int i = 0; i < Dimensao; i++){
+		for (int j = 0; j < Dimensao; j++){
+			if(Matriz[i][j] != MatrizObjetivo[i][j]){
+				aux = false;
+			}
+		}
+	}
+
+	return aux;
 }
