@@ -4,24 +4,24 @@
 
 using namespace std;
 
-//Função responsável por alocar o espaço correspondente para a matriz.
-int** InstanciaMatriz(int** Matriz, int Dimensao);
+// //Função responsável por alocar o espaço correspondente para a matriz.
+// int** InstanciaMatriz(int** Matriz, int Dimensao);
 
-//Função responsável por inicializar com os respectivos valores de cada posição da matriz.
-int** InicializaMatrixObjetivo(int** Matriz, int Dimensao);
+// //Função responsável por inicializar com os respectivos valores de cada posição da matriz.
+// int** InicializaMatrixObjetivo(int** Matriz, int Dimensao);
 
-//Inicializa vetor de distâncias
-int* InicializaVetorDistancias(int* Vetor, int Dimensao, int** MatrizInicial, int** MatrizObjetivo);
+// //Inicializa vetor de distâncias
+// int* InicializaVetorDistancias(int* Vetor, int Dimensao, int** MatrizInicial, int** MatrizObjetivo);
 
-void MostraMatriz(int** Matriz, int Dimensao);
+// void MostraMatriz(int** Matriz, int Dimensao);
 
-int CalcularDistancia(int i, int j, int u, int v);
+// int CalcularDistancia(int i, int j, int u, int v);
 
-//Funções de movimentações de peças
-void Mover(int i, int j, int** Matriz, int Dimensao);
+// //Funções de movimentações de peças
+// void Mover(int i, int j, int** Matriz, int Dimensao);
 
-//Verifica se o estado objetivo foi alcançado.
-bool VerificarObjetivo(int** Matriz, int** MatrizObjetivo, int Dimensao);
+// //Verifica se o estado objetivo foi alcançado.
+// bool VerificarObjetivo(int** Matriz, int** MatrizObjetivo, int Dimensao);
 
 
 //Função responsável por alocar o espaço correspondente para a matriz.
@@ -61,6 +61,12 @@ void MostraMatriz(int** Matriz, int Dimensao){
 
 		cout << endl;
 	}
+}
+
+int CalcularDistancia(int i, int j, int u, int v){
+	int distancia = abs(i - u) + abs(j - v);
+
+	return distancia;
 }
 
 int* InicializaVetorDistancias(int* Vetor, int Dimensao, int** MatrizInicial, int** MatrizObjetivo){
@@ -117,10 +123,4 @@ bool VerificarObjetivo(int** Matriz, int** MatrizObjetivo, int Dimensao){
 	}
 
 	return true;
-}
-
-int CalcularDistancia(int i, int j, int u, int v){
-	int distancia = abs(i - u) + abs(j - v);
-
-	return distancia;
 }
