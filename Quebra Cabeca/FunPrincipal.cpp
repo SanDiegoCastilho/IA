@@ -31,7 +31,7 @@ int main(){
     int** MatrizInicial;
     int MatrizInicialTop[Dimensao][Dimensao] = {
 		{ 8, 1, 3 },
-		{ 2, 0, 5 },
+		{ 2, 5, 0 },
 		{ 4, 7, 6 }
 	};
 
@@ -61,10 +61,16 @@ int main(){
 	for (int i = 0; i < Dimensao * Dimensao; ++i){
 		cout << Distancias[i] << " ";
 	}
+	cout << endl;
 
 	cout << "----------------------------------" << endl;
 	No n(MatrizInicial, MatrizObjetivo, Dimensao);
 
+	cout << "----------------------------------" << endl;
+	for (int i = 0; i < 4; i++)	{
+		MostraMatriz(n.Filhos[i]->Matriz, Dimensao);
+		cout << endl;
+	}
 
 	return 0;
 }

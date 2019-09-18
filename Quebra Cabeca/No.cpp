@@ -13,6 +13,8 @@ No::No(int** Matriz, No* Pai, int** MatrizObjetivo, int Dimensao){
         this->Filhos = new No* [4];
         GerarFilhos(Dimensao, MatrizObjetivo);
         VerificaSolucao(MatrizObjetivo, Dimensao);
+        cout << endl; 
+        cout << "oi" << endl;
 }
 
 No::No(int** Matriz, int** MatrizObjetivo, int Dimensao){
@@ -44,22 +46,26 @@ void No::GerarFilhos(int Dimensao, int** MatrizObjetivo){
     }
 
     cout << "aqui" <<endl;
+    cout << "posição do 0: " << u << " " << v << endl;
 
-    Mover(u+1, v, MatrizAux[0], Dimensao);
-    this->Filhos[0] = new No(MatrizAux[0], this, MatrizObjetivo, Dimensao);
-    this->Filhos[0]->Altura = this->Altura+1;
+    if (u+1 <= Dimensao-1 && u-1 >= 0 && v+1 <= Dimensao-1 && v-1 >= 0){
+        Mover(u+1, v, MatrizAux[0], Dimensao);
+        this->Filhos[0] = new No(MatrizAux[0], this, MatrizObjetivo, Dimensao);
+        this->Filhos[0]->Altura = this->Altura+1;
+        
+        Mover(u-1, v, MatrizAux[2], Dimensao);
+        this->Filhos[2] = new No(MatrizAux[2], this, MatrizObjetivo, Dimensao);
+        this->Filhos[2]->Altura = this->Altura+1;
 
-    Mover(u, v+1, MatrizAux[1], Dimensao);
-    this->Filhos[1] = new No(MatrizAux[1], this, MatrizObjetivo, Dimensao);
-    this->Filhos[1]->Altura = this->Altura+1;
-
-    Mover(u-1, v, MatrizAux[2], Dimensao);
-    this->Filhos[2] = new No(MatrizAux[2], this, MatrizObjetivo, Dimensao);
-    this->Filhos[2]->Altura = this->Altura+1;
- 
-    Mover(u, v-1, MatrizAux[3], Dimensao);
-    this->Filhos[3] = new No(MatrizAux[3], this, MatrizObjetivo, Dimensao);
-    this->Filhos[3]->Altura = this->Altura+1;
+        Mover(u, v+1, MatrizAux[1], Dimensao);
+        this->Filhos[1] = new No(MatrizAux[1], this, MatrizObjetivo, Dimensao);
+        this->Filhos[1]->Altura = this->Altura+1;
+     
+        Mover(u, v-1, MatrizAux[3], Dimensao);
+        this->Filhos[3] = new No(MatrizAux[3], this, MatrizObjetivo, Dimensao);
+        this->Filhos[3]->Altura = this->Altura+1;
+    }
+    
 }
 
 void No::VerificaSolucao(int** MatrizObjetivo, int Dimensao){
