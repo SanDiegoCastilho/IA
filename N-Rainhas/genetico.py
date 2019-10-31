@@ -81,10 +81,10 @@ def Cruzamento(pai1, pai2, jogos):
 	filho2 = pai2[:indexAleatorio] + pai1[indexAleatorio:]
 
 	#Mutação
-	if random.random() > 0.00:
+	if random.random() < 0.10:
 	  filho1[random.randint(0, n-1)] = random.randint(0, n-1)
 
-	if random.random() > 0.00:
+	if random.random() < 0.10:
 	  filho2[random.randint(0, n-1)] = random.randint(0, n-1)
 
 	jogos.append(filho1)
@@ -105,27 +105,46 @@ def CruzamentoIntercalado(pai1, pai2, jogos):
 			filho2.append(pai2[i])
 
 	#Mutação
-	if random.random() > 0.00:
+	if random.random() < 0.10:
 	  filho1[random.randint(0, n-1)] = random.randint(0, n-1)
 
-	if random.random() > 0.00:
+	if random.random() < 0.10:
 	  filho2[random.randint(0, n-1)] = random.randint(0, n-1)
 
 	jogos.append(filho1)
 	jogos.append(filho2)
 
+def Elitismo(jogos):
+	a = [ state_cost(i) for i in jogos ]
+	a.sort()
+	maiores = [a[0],a[1]]
+
+	Escolhidos = []
+
+	for j in jogos:
+		if len(Escolhidos) != 2: 
+			if state_cost(j) in maiores:
+				Escolhidos.append(j)
+
+	return Escolhidos
+
+
 
 n = 40
 jogos = criarTabelas(10,n)
 ProxGeracao = []
+Melhores = []
 achou = False
 
 for x in range(1,500):
-    for i in range(0, int(len(jogos)/2)):
+    for i in range(0, int(len(jogos)/2) - 1):
 	    pai1 = jogos[GeraRoleta(jogos)]
 	    pai2 = jogos[GeraRoleta(jogos)]
-	    CruzamentoIntercalado(pai1, pai2, ProxGeracao)
-    
+	    Cruzamento(pai1, pai2, ProxGeracao)
+
+    Melhores = Elitismo(jogos)
+    ProxGeracao.append(Melhores[0])
+    ProxGeracao.append(Melhores[1])
     jogos = ProxGeracao
     ProxGeracao = []
     for x in range(0, len(jogos)):
