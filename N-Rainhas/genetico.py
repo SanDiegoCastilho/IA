@@ -71,33 +71,75 @@ def GeraRoleta(jogos):
     if(escolhaRandomica >= i[0] and escolhaRandomica < i[1]):
       indiceEscolhido = Roleta.index(i)
 
-  print(indiceEscolhido)
   return indiceEscolhido
 
 
+def Cruzamento(pai1, pai2, jogos):
+	indexAleatorio = random.randint(0, n-1)
 
-n = 10
+	filho1 = pai1[:indexAleatorio] + pai2[indexAleatorio:]
+	filho2 = pai2[:indexAleatorio] + pai1[indexAleatorio:]
 
-# jogos = [[7,7,7,7,7,7,7,7,7,7], [9,9,9,9,9,9,9,9,9,9]]
+	#Mutação
+	if random.random() > 0.00:
+	  filho1[random.randint(0, n-1)] = random.randint(0, n-1)
 
-jogos = criarTabelas(5,n)
-pai1 = jogos[GeraRoleta(jogos)]
-pai2 = jogos[GeraRoleta(jogos)]
+	if random.random() > 0.00:
+	  filho2[random.randint(0, n-1)] = random.randint(0, n-1)
 
-indexAleatorio = random.randint(0, n-1)
-print(indexAleatorio)
+	jogos.append(filho1)
+	jogos.append(filho2)
 
-filho1 = pai1[:indexAleatorio] + pai2[indexAleatorio:]
-filho2 = pai2[:indexAleatorio] + pai1[indexAleatorio:]
+def CruzamentoIntercalado(pai1, pai2, jogos):
+	indexAleatorio = random.randint(0, n-1)
 
-if random.random() > 0.00:
-  filho1[random.randint(0, n-1)] = random.randint(0, n-1)
+	filho1 = []
+	filho2 = []
 
-if random.random() > 0.00:
-  filho2[random.randint(0, n-1)] = random.randint(0, n-1)
+	for i in range(0, len(pai1)):
+		if (i % 2 == 0):
+			filho1.append(pai1[i])
+			filho2.append(pai1[i])
+		else:
+			filho1.append(pai2[i])
+			filho2.append(pai2[i])
 
-print(filho1)
-print(filho2)
+	#Mutação
+	if random.random() > 0.00:
+	  filho1[random.randint(0, n-1)] = random.randint(0, n-1)
 
-jogos[0] = filho1
-jogos[1] = filho2
+	if random.random() > 0.00:
+	  filho2[random.randint(0, n-1)] = random.randint(0, n-1)
+
+	jogos.append(filho1)
+	jogos.append(filho2)
+
+
+n = 40
+jogos = criarTabelas(10,n)
+ProxGeracao = []
+achou = False
+
+for x in range(1,500):
+    for i in range(0, int(len(jogos)/2)):
+	    pai1 = jogos[GeraRoleta(jogos)]
+	    pai2 = jogos[GeraRoleta(jogos)]
+	    CruzamentoIntercalado(pai1, pai2, ProxGeracao)
+    
+    jogos = ProxGeracao
+    ProxGeracao = []
+    for x in range(0, len(jogos)):
+    	if (state_cost(jogos[x]) == 0) :
+    		achou = True
+    		break
+    if (achou):
+    	break
+
+aux = state_cost(jogos[0])
+i = 0
+for x in range(0, len(jogos)):
+	if (state_cost(jogos[x]) < aux):
+		aux = state_cost(jogos[x])
+		i = x
+print(aux)		
+print(jogos[i])
